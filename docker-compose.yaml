@@ -1,0 +1,28 @@
+version: '3.1'
+services:
+  database:
+    image: postgres:12
+    container_name: psql
+    restart: on-failure
+    ports:
+    - 0.0.0.0:5432:5432
+    environment:
+      POSTGRES_DB: bpmn
+      POSTGRES_USER: bpmn
+      POSTGRES_PASSWORD: bpmn
+    networks:
+      - bpmn
+  database-admin:
+    image: dpage/pgadmin4:latest
+    container_name: psqladm
+    restart: on-failure
+    ports:
+    - 0.0.0.0:8081:80
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pgadm@localhost.localdomain
+      PGADMIN_DEFAULT_PASSWORD: pgadm123
+    networks:
+      - bpmn
+networks:
+  bpmn:
+    driver: bridge
